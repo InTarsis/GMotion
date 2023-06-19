@@ -11,7 +11,8 @@
 #               generates interactive maps and plots to conduct timeseries analysis.
 #               The main products are timeseries multilayer maps and timeseries cross-sections.
 # 
-# Comment:      This is the RStudio version, which uses the subsidence in Bologna as a case study. 
+# Comment:      Although this code can be applied to any zip file downloaded from the Copernicus EGMS platform, 
+#               this code is parameterized for the subsidence experienced in the Bologna area, Italy, file EGMS_L3_E44N23_100km_U.zip
 #               It serves as a practical exercise in the context of the advanced course RawMatCop-Alliance, 
 #               focusing on Earth Observation applied to Raw Materials. 
 #               The EGMS data can be found in the working directory .../Data
@@ -21,7 +22,7 @@
 #
 
 # wroking directory
-setwd("..../Data")  
+setwd("..../Data") 
 getwd()
 #
 ##############
@@ -60,7 +61,8 @@ library(htmlwidgets)      # To transform graphic product into a HTML file
 # these are the 4 EGMS tiles around Bologna
 EGMS_zip = "EGMS_L3_E44N23_100km_U.zip"
 
-#The EGMS projection is in EPSG:3035 ETRS89-extended / LAEA Europe / Lambert azimuthal equal-area projection
+# ROI
+# The EGMS projection is in EPSG:3035 ETRS89-extended / LAEA Europe / Lambert azimuthal equal-area projection
 # limits to the ROI in meters 
 W_limit = 4365000 ; E_limit = 4450000
 S_limit = 2375000 ; N_limit = 2420000
@@ -116,13 +118,13 @@ egms_vel_r <- raster(egms_vel)
 # 3.4. In some areas, interpolation can produce mathematical artifacts (outliers), especially at dataset boundaries,
 #'    skewing analysis and visualization. Apply this to identify and remove these extreme values in the raster.
 #'
-#'    Establish outlier boundaries
-      lower_limit = -25
-      upper_limit = 10
+#'    Establish outlier boundaries for mean velocity
+      vel_lower_limit = -40
+      vel_upper_limit = 40
 
 #     Replace values outside these limits with NA.
       egms_vel_r2 = egms_vel_r          # preserve the original raster, work on the copy
-      egms_vel_r2[egms_vel_r2 < lower_limit | egms_vel_r2 > upper_limit] <- NA
+      egms_vel_r2[egms_vel_r2 < vel_lower_limit | egms_vel_r2 > vel_upper_limit] <- NA
 
 #     Plot the raster again
       plot(egms_vel_r2)
@@ -148,7 +150,7 @@ egms_vel_r <- raster(egms_vel)
 #     3.5.4 Masking
            egms_vel_rm2 = egms_vel_rm # preserve the original raster, work on the copy
 
-      #    Det the maximum allowed distance   
+      #    Determine the maximum distance for interpolation confidence
            offset = 700
            
       #    Change all values in egms_vel_rm2 to NA if the corresponding distance in distance_rm is greater than x
@@ -217,7 +219,7 @@ p_vel
 
 
 #'##############
-### 5. MAPPING TIMESERIES
+### 5. MAPPING GROUND MOTION TIMESERIES 
 #'##############
 
 # 5.1. Define the timeseries monitoring period
@@ -261,13 +263,13 @@ p_vel
 # 5.5. In some areas, interpolation can produce mathematical artifacts (outliers), especially at dataset boundaries,
      #'    skewing analysis and visualization. Apply this to identify and remove these extreme values in the raster.
      #'
-     #'    Establish outlier boundaries
-     lower_limit = -200
-     upper_limit = 200
+     #'    Establish outlier boundaries for displacement
+     disp_lower_limit = -200
+     disp_upper_limit = 200
      
      #     Replace values outside these limits with NA.
      egms_ts_r2 = egms_ts_r          # preserve the original raster, work on the copy
-     egms_ts_r2[egms_ts_r2 < lower_limit | egms_ts_r2 > upper_limit] <- NA
+     egms_ts_r2[egms_ts_r2 < disp_lower_limit | egms_ts_r2 > disp_upper_limit] <- NA
      
      #     Plot the raster again
      boxplot(egms_ts_r2)
@@ -282,6 +284,7 @@ p_vel
 # 5.7. Masking areas with no data
      egms_ts_rm2 = egms_ts_rm # copy raster
 
+#    offset variable (3.5.4 Masking) is the maximum distance for interpolation confidence
 #    Change all values in egms_ts_rm2 to NA if the corresponding distance in distance_rm is greater than x
      egms_ts_rm2[distance_rm > offset] <- NA
 
@@ -342,7 +345,7 @@ htmlwidgets::saveWidget(p_ts, "Timeseries.html")
 
 #' 7.1. Create the cross-section to project the timeseries displacements
 
-#'   Use the velocity or the time series map to define the cross-section coordinates 
+#'   Use option of draw a polyline in the dinamic map to get maker defining the cross-section coordinates 
 
 #    cross-section coords and spatvector format
      line_coords <- rbind(c(11.58334, 44.52499), c(11.08664, 44.63011))
