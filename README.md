@@ -9,7 +9,7 @@ It serves as a practical exercise in the context of the advanced course RawMatCo
 Earth Observation applied to Raw Materials. The EGMS data can be found in the working directory .../Data
 
 Although this code can be applied to any zip file downloaded from the Copernicus EGMS platform, 
-this code is parameterized for the subsidence experienced in the Bologna area, Italy, file EGMS_L3_E44N23_100km_U.zip
+this code is parameterized for the subsidence experienced in the Bologna area, Italy, file EGMS_L3_E44N23_100km_U.zip.
 Files do not need to be unziped. 
 
 Main parameters that need to be modifed for appling to a new area are: 
