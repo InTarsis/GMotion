@@ -17,7 +17,7 @@
 #               focusing on Earth Observation applied to Raw Materials. 
 #               The EGMS data can be found in the working directory .../Data
 #
-# cite:         https://zenodo.org/badge/latestdoi/655639193
+# cite:         Use the Zenodo doi available in the Github readme
 # -----------------------------------------------------
 #
 # wroking directory
