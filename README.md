@@ -1,6 +1,6 @@
 # GMotion
 This R script is dedicated to postprocess the ground motion data from the Copernicus EGMS platform. 
-The code reads the EGMS CSV files, subsets the data according to specified region of interest, 
+The code reads the EGMS zip files, subsets the data according to specified region of interest, 
 and generates interactive maps and plots to conduct timeseries analysis. 
 The main products are timeseries multilayer maps and timeseries cross-sections.
 
