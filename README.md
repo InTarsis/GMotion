@@ -12,7 +12,7 @@ Although this code can be applied to any zip file downloaded from the Copernicus
 this code is parameterized for the subsidence experienced in the Bologna area, Italy, file EGMS_L3_E44N23_100km_U.zip.
 Files do not need to be unziped. 
 
-Main parameters that need to be modifed for appling to a new area are: 
+Main parameters that need to be modified for applying to a new area are: 
 1. The ROI.................. W-E & S-N limits
 2. grid_step.................for the raster spacing. Use large values when running the first time to reduce time consuming.
 3. vel_lower_limit, vel_upper_limit, disp_lower_limit, disp_upper_limit............lower & upper limits to remove outliers
